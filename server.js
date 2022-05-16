@@ -43,18 +43,22 @@ io.on("connection", (socket) => {
 
   socket.on("move", (x, y) => {
     let player = findPlayer(socket.id);
-    player.move(x, y);
+    if (player !== undefined) {
+      player.move(x, y);
+    }
     io.emit("change", playerArr);
   });
 
   socket.on("message", (msg) => {
     let player = findPlayer(socket.id);
-    player.message = msg;
-    io.emit("change", playerArr);
-    setTimeout(() => {
-      player.message = "";
+    if (player !== undefined) {
+      player.message = msg;
       io.emit("change", playerArr);
-    }, 8000);
+      setTimeout(() => {
+        player.message = "";
+        io.emit("change", playerArr);
+      }, 8000);
+    }
   });
 });
 
