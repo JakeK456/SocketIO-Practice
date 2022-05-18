@@ -1,22 +1,22 @@
 const { v4: uuidv4 } = require("uuid");
 
 class Player {
-  constructor(xPos, yPos, width, height, color, socketId) {
+  constructor(x, y, w, h, color, socketId) {
     this.id = uuidv4();
     this.socketId = socketId;
-    if (xPos === -1) {
-      this.xPos = getRandomInt(0, 1024);
+    if (x === -1) {
+      this.x = getRandomInt(0, 1024);
     } else {
-      this.xPos = xPos;
+      this.x = x;
     }
 
-    if (yPos === -1) {
-      this.yPos = getRandomInt(0, 576);
+    if (y === -1) {
+      this.y = getRandomInt(0, 576);
     } else {
-      this.yPos = yPos;
+      this.y = y;
     }
-    this.width = width;
-    this.height = height;
+    this.w = w;
+    this.h = h;
     this.color = color;
     this.speed = 2;
     this.message = "";
@@ -24,8 +24,35 @@ class Player {
 
   // ux and uy must be unit. either -1, 0, or 1
   move(ux, uy) {
-    this.xPos += normalize(ux) * this.speed;
-    this.yPos += normalize(uy) * this.speed;
+    this.x += normalize(ux) * this.speed;
+    this.y += normalize(uy) * this.speed;
+  }
+
+  // takes in array of objects, each object has a x,y,w,h
+  calcCollisions(arrOfObjs) {
+    let hits = [];
+    arrOfObjs.forEach((obj) => {
+      if (
+        this.id !== obj.id &&
+        this.x < obj.x + obj.w &&
+        this.x + this.w > obj.x &&
+        this.y < obj.y + obj.h &&
+        this.y + this.h > obj.y
+      ) {
+        hits.push(obj);
+      }
+    });
+
+    if (hits.length === 0) {
+      this.color = "black";
+    } else {
+      this.color = "red";
+      hits.forEach((obj) => {
+        obj.color = "red";
+      });
+    }
+
+    return hits;
   }
 }
 

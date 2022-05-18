@@ -7,6 +7,7 @@ const io = new Server(server);
 const { v4: uuidv4 } = require("uuid");
 
 const Player = require("./models/player.js");
+const MS_PER_FRAME = 16.6;
 
 let playerArr = [];
 let messages = [];
@@ -72,10 +73,10 @@ const findPlayer = (socketId) => {
   return playerArr.find((obj) => obj.socketId === socketId);
 };
 
-const remove = (array, property, criteria) => {
-  return array.filter((obj) => obj.property !== criteria);
+const serverLoop = () => {
+  playerArr.forEach((player) => {
+    player.calcCollisions(playerArr);
+  });
 };
 
-const removeMessage = (id) => {
-  messages = messages.filter((obj) => obj.id !== id);
-};
+setInterval(serverLoop, MS_PER_FRAME);

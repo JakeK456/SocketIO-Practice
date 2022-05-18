@@ -14,8 +14,6 @@ canvas.height = gameDiv.clientHeight;
 context.font = "30px Comic Sans MS";
 context.textAlign = "center";
 
-// let clientID;
-
 let playerArr = [];
 
 connectButton.addEventListener("click", (event) => {
@@ -38,28 +36,27 @@ chatForm.addEventListener("submit", (event) => {
 
 socket.on("change", (arr) => {
   playerArr = arr;
-  console.log(playerArr);
 });
 
 socket.on("message", (arr) => {
   messages = arr;
-  console.log(arr);
 });
 
 const drawPlayers = (playerArr) => {
   for (var i = 0; i < playerArr.length; i++) {
+    context.fillStyle = playerArr[i].color;
     context.fillRect(
-      playerArr[i].xPos,
-      playerArr[i].yPos,
-      playerArr[i].width,
-      playerArr[i].height
+      playerArr[i].x,
+      playerArr[i].y,
+      playerArr[i].w,
+      playerArr[i].h
     );
 
     if (playerArr[i].message !== "") {
       context.fillText(
         playerArr[i].message,
-        playerArr[i].xPos + playerArr[i].width / 2,
-        playerArr[i].yPos - 50
+        playerArr[i].x + playerArr[i].w / 2,
+        playerArr[i].y - 50
       );
       console.log(playerArr[i].message);
     }
