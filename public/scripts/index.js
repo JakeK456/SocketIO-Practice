@@ -67,14 +67,16 @@ var keyState = {};
 window.addEventListener(
   "keydown",
   function (e) {
-    keyState[e.key || e.which] = true;
+    e.preventDefault();
+    keyState[e.key] = true;
   },
   true
 );
 window.addEventListener(
   "keyup",
   function (e) {
-    keyState[e.key || e.which] = false;
+    e.preventDefault();
+    keyState[e.key] = false;
   },
   true
 );

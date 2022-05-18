@@ -18,7 +18,7 @@ class Player {
     this.w = w;
     this.h = h;
     this.color = color;
-    this.speed = 2;
+    this.speed = 1;
     this.message = "";
   }
 
