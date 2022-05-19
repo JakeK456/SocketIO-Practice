@@ -11,6 +11,9 @@ const context = canvas.getContext("2d");
 canvas.width = gameDiv.clientWidth;
 canvas.height = gameDiv.clientHeight;
 
+console.log(canvas.height);
+console.log(canvas.width);
+
 context.font = "30px Comic Sans MS";
 context.textAlign = "center";
 
@@ -18,15 +21,15 @@ let playerArr = [];
 
 connectButton.addEventListener("click", (event) => {
   connectButton.style.display = "none";
-  disconnectButton.style.display = "block";
+  //disconnectButton.style.display = "block";
   socket.emit("join");
 });
 
-disconnectButton.addEventListener("click", (event) => {
-  connectButton.style.display = "block";
-  disconnectButton.style.display = "none";
-  socket.emit("leave");
-});
+// disconnectButton.addEventListener("click", (event) => {
+//   connectButton.style.display = "block";
+//   disconnectButton.style.display = "none";
+//   socket.emit("leave");
+// });
 
 chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -67,7 +70,7 @@ var keyState = {};
 window.addEventListener(
   "keydown",
   function (e) {
-    e.preventDefault();
+    //e.preventDefault();
     keyState[e.key] = true;
   },
   true
@@ -75,7 +78,7 @@ window.addEventListener(
 window.addEventListener(
   "keyup",
   function (e) {
-    e.preventDefault();
+    //e.preventDefault();
     keyState[e.key] = false;
   },
   true
