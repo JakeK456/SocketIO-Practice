@@ -44,6 +44,7 @@ const drawPlayers = () => {
     playerObjClient[playerServer.id].x = playerServer.x;
     playerObjClient[playerServer.id].y = playerServer.y;
     playerObjClient[playerServer.id].frameY = playerServer.frameY;
+    playerObjClient[playerServer.id].facingRight = playerServer.facingRight;
 
     // TODO: move this onto player
     if (playerServer.message !== "") {
@@ -75,14 +76,16 @@ let lastTime;
 const update = (currentTime) => {
   const dt = currentTime - lastTime;
   lastTime = currentTime;
-
   console.log(dt);
 
   const keys = input.getInputs();
-  const emits = input.generateEmits(keys);
+  console.log(keys);
+  const emits = input.generateEmits(keys, dt);
 
   emits.forEach((emit) => {
-    socket.emit(...emit);
+    if (emit !== []) {
+      socket.emit(...emit, dt);
+    }
   });
 };
 

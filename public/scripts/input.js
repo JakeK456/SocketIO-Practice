@@ -42,5 +42,23 @@ const keyToEmit = (key) => {
       return ["move", 0, -1];
     case "ArrowDown":
       return ["move", 0, 1];
+    case "1":
+      return ["changeAnim", "idle", 0];
+    case "2":
+      return ["changeAnim", "walk", 1];
+    case "3":
+      return ["changeAnim", "run", 2];
+    case "4":
+      return ["changeAnim", "slash", 3];
+    case "5":
+      return ["changeAnim", "jab", 4];
+    case "6":
+      return ["changeAnim", "bowshot", 5];
+    case "7":
+      return ["changeAnim", "fallback", 6];
+    case "8":
+      return ["changeAnim", "fallforward", 7];
+    default:
+      return [];
   }
 };
