@@ -20,6 +20,7 @@ class Player {
     this.color = color;
     this.speed = 0.8;
     this.message = "";
+    this.frameY = getRandomInt(0, 3);
   }
 
   // ux and uy must be unit. either -1, 0, or 1

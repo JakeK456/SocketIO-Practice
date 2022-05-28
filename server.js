@@ -1,10 +1,10 @@
+const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const { v4: uuidv4 } = require("uuid");
 
 const Player = require("./models/player.js");
 const MS_PER_FRAME = 16.6;
