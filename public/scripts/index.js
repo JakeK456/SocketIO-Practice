@@ -44,7 +44,14 @@ const drawPlayers = () => {
     playerObjClient[playerServer.id].x = playerServer.x;
     playerObjClient[playerServer.id].y = playerServer.y;
     playerObjClient[playerServer.id].frameY = playerServer.frameY;
-    playerObjClient[playerServer.id].facingRight = playerServer.facingRight;
+    console.log("server ", playerServer.facingRight);
+    console.log("client ", playerObjClient[playerServer.id].facingRight);
+    if (
+      playerObjClient[playerServer.id].facingRight !== playerServer.facingRight
+    ) {
+      playerObjClient[playerServer.id].flipSprites(playerServer.facingRight);
+      console.log("flippingSprite");
+    }
 
     // TODO: move this onto player
     if (playerServer.message !== "") {

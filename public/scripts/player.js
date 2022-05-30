@@ -1,6 +1,7 @@
 export default class Player {
   constructor(x, y) {
-    this.sprites = getSprites();
+    this.spriteCache = getSprites();
+    this.sprites = this.spriteCache.facingRight;
     this.x = x;
     this.y = y;
     this.facingRight = true;
@@ -33,6 +34,15 @@ export default class Player {
         : (this.frameX = 0);
     }
     this.gameFrame++;
+  }
+
+  flipSprites(facingRight) {
+    if (facingRight) {
+      this.sprites = this.spriteCache.facingRight;
+    } else {
+      this.sprites = this.spriteCache.facingLeft;
+    }
+    this.facingRight = facingRight;
   }
 }
 
@@ -80,12 +90,23 @@ const getSprites = () => {
   weaponLPlayerImage.src = "images/256px/8frames/weapon_1_l.webp";
 
   return {
-    body: bodyPlayerImage,
-    clothes: clothesPlayerImage,
-    head: headPlayerImage,
-    hair: hairPlayerImage,
-    eyes: eyesPlayerImage,
-    mouth: mouthPlayerImage,
-    weapon: weaponPlayerImage,
+    facingRight: {
+      body: bodyPlayerImage,
+      clothes: clothesPlayerImage,
+      head: headPlayerImage,
+      hair: hairPlayerImage,
+      eyes: eyesPlayerImage,
+      mouth: mouthPlayerImage,
+      weapon: weaponPlayerImage,
+    },
+    facingLeft: {
+      body: bodyLPlayerImage,
+      clothes: clothesLPlayerImage,
+      head: headLPlayerImage,
+      hair: hairLPlayerImage,
+      eyes: eyesLPlayerImage,
+      mouth: mouthLPlayerImage,
+      weapon: weaponLPlayerImage,
+    },
   };
 };

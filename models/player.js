@@ -20,7 +20,13 @@ class Player {
     this.x += normalize(ux) * this.speed * dt;
     this.y += normalize(uy) * this.speed * dt;
 
-    ux > 0 ? (this.facingRight = true) : (this.facingRight = false);
+    if (ux > 0) {
+      this.facingRight = true;
+    }
+    if (ux < 0) {
+      this.facingRight = false;
+    }
+    // ux > 0 ? (this.facingRight = true) : (this.facingRight = false);
   }
 
   // takes in array of objects, each object has a x,y,w,h
