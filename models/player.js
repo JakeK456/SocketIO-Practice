@@ -4,28 +4,29 @@ class Player {
   constructor(x, y, w, h, color, socketId) {
     this.id = uuidv4();
     this.socketId = socketId;
-    if (x === -1) {
-      this.x = getRandomInt(0, 1024);
-    } else {
-      this.x = x;
-    }
-
-    if (y === -1) {
-      this.y = getRandomInt(0, 576);
-    } else {
-      this.y = y;
-    }
+    this.x = x;
+    this.y = y;
     this.w = w;
     this.h = h;
     this.color = color;
-    this.speed = 0.8;
+    this.speed = 0.12;
     this.message = "";
+    this.frameY = 0;
+    this.facingRight = true;
   }
 
   // ux and uy must be unit. either -1, 0, or 1
-  move(ux, uy) {
-    this.x += normalize(ux) * this.speed;
-    this.y += normalize(uy) * this.speed;
+  move(ux, uy, dt) {
+    this.x += normalize(ux) * this.speed * dt;
+    this.y += normalize(uy) * this.speed * dt;
+
+    if (ux > 0) {
+      this.facingRight = true;
+    }
+    if (ux < 0) {
+      this.facingRight = false;
+    }
+    // ux > 0 ? (this.facingRight = true) : (this.facingRight = false);
   }
 
   // takes in array of objects, each object has a x,y,w,h

@@ -1,10 +1,10 @@
+const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const { v4: uuidv4 } = require("uuid");
 
 const Player = require("./models/player.js");
 const MS_PER_FRAME = 16.6;
@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("join", () => {
-    playerArr.push(new Player(-1, -1, 50, 50, "black", socket.id));
+    playerArr.push(new Player(100, 100, 50, 50, "black", socket.id));
     io.emit("change", playerArr);
   });
 
@@ -42,10 +42,18 @@ io.on("connection", (socket) => {
     io.emit("change", playerArr);
   });
 
-  socket.on("move", (x, y) => {
+  socket.on("move", (x, y, dt) => {
     let player = findPlayer(socket.id);
     if (player !== undefined) {
-      player.move(x, y);
+      player.move(x, y, dt);
+    }
+    io.emit("change", playerArr);
+  });
+
+  socket.on("changeAnim", (anim, frameY) => {
+    let player = findPlayer(socket.id);
+    if (player !== undefined) {
+      player.frameY = frameY;
     }
     io.emit("change", playerArr);
   });
