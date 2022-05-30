@@ -38,7 +38,7 @@ socket.on("change", (arr) => {
   playerArrServer = arr;
 });
 
-const drawPlayers = () => {
+const drawPlayers = (dt) => {
   // copy data array from server into client player model
   playerArrServer.forEach((playerServer) => {
     if (!playerObjClient.hasOwnProperty(playerServer.id)) {
@@ -47,13 +47,11 @@ const drawPlayers = () => {
     playerObjClient[playerServer.id].x = playerServer.x;
     playerObjClient[playerServer.id].y = playerServer.y;
     playerObjClient[playerServer.id].frameY = playerServer.frameY;
-    console.log("server ", playerServer.facingRight);
-    console.log("client ", playerObjClient[playerServer.id].facingRight);
+
     if (
       playerObjClient[playerServer.id].facingRight !== playerServer.facingRight
     ) {
       playerObjClient[playerServer.id].flipSprites(playerServer.facingRight);
-      console.log("flippingSprite");
     }
 
     // TODO: move this onto player
@@ -76,20 +74,16 @@ const drawPlayers = () => {
 
   // draw client player model
   for (const player in playerObjClient) {
-    playerObjClient[player].draw(context);
+    playerObjClient[player].draw(context, dt);
   }
 };
 
 const input = new InputHandler();
-let lastTime;
 
-const update = (currentTime) => {
-  const dt = currentTime - lastTime;
-  lastTime = currentTime;
-  console.log(dt);
+const update = (dt) => {
+  //console.log(dt);
 
   const keys = input.getInputs();
-  console.log(keys);
   const emits = input.generateEmits(keys, dt);
 
   emits.forEach((emit) => {
@@ -99,17 +93,21 @@ const update = (currentTime) => {
   });
 };
 
-const render = () => {
+const render = (dt) => {
   context.clearRect(0, 0, canvas.width, canvas.height);
-  drawPlayers();
+  drawPlayers(dt);
 };
 
 let frameID;
+let lastTime;
 
 function runGameLoop(tFrame) {
+  const dt = tFrame - lastTime;
+  lastTime = tFrame;
+
   frameID = window.requestAnimationFrame(runGameLoop);
-  update(tFrame);
-  render();
+  update(dt);
+  render(dt);
 }
 
 runGameLoop();

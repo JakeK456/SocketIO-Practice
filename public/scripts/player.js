@@ -7,14 +7,15 @@ export default class Player {
     this.facingRight = true;
     this.frameX = 0;
     this.frameY = 0;
-    this.gameFrame = 0;
+    // this.gameFrame = 0;
+    this.elapsedTime = 0;
     this.SPRITE_WIDTH = 256;
     this.SPRITE_HEIGHT = 256;
     this.NUM_SPRITE_FRAMES = 8;
-    this.STAGGER_FRAMES = 15;
+    // this.STAGGER_FRAMES = 15;
   }
 
-  draw(context) {
+  draw(context, dt) {
     for (const sprite in this.sprites) {
       context.drawImage(
         this.sprites[sprite],
@@ -28,12 +29,21 @@ export default class Player {
         this.SPRITE_HEIGHT
       );
     }
-    if (this.gameFrame % this.STAGGER_FRAMES === 0) {
+    if (this.elapsedTime > 75) {
+      this.elapsedTime = 0;
       this.frameX < this.NUM_SPRITE_FRAMES - 1
         ? this.frameX++
         : (this.frameX = 0);
     }
-    this.gameFrame++;
+    console.log("e ", this.elapsedTime);
+    console.log("dt ", dt);
+    this.elapsedTime += dt;
+    // if (this.gameFrame % this.STAGGER_FRAMES === 0) {
+    //   this.frameX < this.NUM_SPRITE_FRAMES - 1
+    //     ? this.frameX++
+    //     : (this.frameX = 0);
+    // }
+    // this.gameFrame++;
   }
 
   flipSprites(facingRight) {
