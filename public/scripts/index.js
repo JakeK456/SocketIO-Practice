@@ -1,7 +1,10 @@
 import InputHandler from "./input.js";
 import Player from "./player.js";
 
-const socket = io("127.0.0.1:3001", { transports: ["websocket"] });
+// const socket = io("127.0.0.1:3001", { transports: ["websocket"] });
+const socket = io("https://socketiotest842.herokuapp.com/", {
+  transports: ["websocket"],
+});
 
 const connectButton = document.getElementById("connect-button");
 const disconnectButton = document.getElementById("disconnect-button");
